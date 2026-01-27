@@ -1,7 +1,7 @@
 package com.javaweb.controllers;
 
-import com.javaweb.employeestream.Employee;
-import com.javaweb.employeestream.EmployeeDataBase;
+import com.javaweb.stream.Employee;
+import com.javaweb.stream.EmployeeDataBase;
 import com.javaweb.stream.Student;
 import com.javaweb.stream.StudentDummyData;
 import org.springframework.web.bind.annotation.GetMapping;

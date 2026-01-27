@@ -11,66 +11,86 @@ public class StudentStreamTest {
         List<Student> students = StudentDummyData.getStudents();
 //        students.forEach(s -> System.out.println(s.getName() + " - " + s.getDept()));
 
-        List<Student> rankeFilteredlistRang_50_100 = students.stream()
-                .filter(student -> student.getRank() > 50 && student.getRank() < 100)
-                .toList();
+        /*
+          ====== ***  1. Rank filtered list with range 50 to 100 */
+        System.out.println("=> CASE 1 : Rank filtered list with range 50 to 100 :: " +
+                students.stream()
+                    .filter(student -> student.getRank() > 50 && student.getRank() < 100)
+                    .toList());
 
-        List<Student>  cityFilterList= students.stream()
-                        .filter(student -> student.getCity().equals("Pune"))
-                        .sorted(Comparator.comparing(Student::getName
-                                ,Comparator.reverseOrder()  // add this input if want order of sorting
-                        )).toList();
+        /*
+        ========= *** 2. city wise filtered list */
+        System.out.println("=> CASE 2 : City wise filtered list :: " +
+                students.stream()
+                    .filter(student -> student.getCity().equals("Pune"))
+                    .sorted(Comparator.comparing(Student::getName
+                            ,Comparator.reverseOrder()  // add this input if want order of sorting
+                    )).toList());
+         /*
+        ========= *** 3. department wise filtered list */
+        System.out.println("=> CASE 3 : Department wise filtered list :: " +
+                students.stream()
+                    .map(Student::getDept)
+                    .distinct()
+//                      .toList()
+                    .collect(Collectors.toSet()));
+        /*
+        ========= *** 4. Mobile number wise filtered list */
+        System.out.println("=> CASE 4 : Mobile number wise filtered list ::: " +
+                students.stream()
+                        .map(Student::getMobileNumbers)// .map() method used for one to one object mappings
+                        .toList());
 
-        Set<String> deptFilterList= students.stream()
-                .map(Student::getDept)
-                .distinct()
-//                .toList()
-                .collect(Collectors.toSet());
+        /*
+        ========= *** 5. Mobile number wise flat filtered list */
+        System.out.println("=> CASE 5 : Mobile number wise flat filtered list :: " +
+                students.stream()
+                        .flatMap(student -> student.getMobileNumbers().stream())// .flatMap() is used to one to many object mapping
+                        .toList());
 
-        List<List<String>> contactList= students.stream()
-                .map(Student::getMobileNumbers)// .map() method used for one to one object mappings
-                .toList();
+         /*
+        ========= *** 6. Department wise name in map */
+        System.out.println("=> CASE 6 : Department wise name in map :: " +
+                students.stream()
+                        .collect(Collectors.groupingBy(Student::getDept)));
 
-        List<String> contactFlatList= students.stream()
-                .flatMap(student -> student.getMobileNumbers().stream())// .flatMap() is used to one to many object mapping
-                .toList();
+        /*
+        ========= *** 7. Department wise name in map with count */
+        System.out.println("=> CASE 7 : Department wise name in map with count :: " +
+                students.stream()
+                        .collect(Collectors.groupingBy(Student::getDept,Collectors.counting())));
 
-        Map<String, List<Student>> groutStudentByDeptNameMap=students.stream()
-                .collect(Collectors.groupingBy(Student::getDept));
+        /*
+        ========= *** 8. Department wise name in map with count max */
+        System.out.println("=> CASE 8 : Department wise name in map with count max :: " +
+                students.stream()
+                        .collect(Collectors.groupingBy(Student::getDept,Collectors.counting()))
+                        .entrySet()
+                        .stream()
+                        .max(Map.Entry.comparingByValue())
+                        .get());
 
-        Map<String, Long> groutStudentByDeptNameMapWithCount=students.stream()
-                .collect(Collectors.groupingBy(Student::getDept,Collectors.counting()));
-
-        Map.Entry<String, Long> groutStudentByDeptNameMapWithCountMax=students.stream()
-                .collect(Collectors.groupingBy(Student::getDept,Collectors.counting()))
-                .entrySet()
-                .stream()
-                .max(Map.Entry.comparingByValue())
-                .get();
-
-        Map<String, Double> groutStudentByGenderAgeAvg=students.stream()
-                .collect(Collectors.groupingBy(Student::getGender,Collectors.averagingInt(Student::getAge)));
-
-        Map<String, Optional<Student>> groutStudentByDeptNameMinRank=students.stream()
-                .collect(Collectors.groupingBy(Student::getDept,
-                        Collectors.minBy(Comparator.comparing(Student::getRank))));
-
-        Student minRankStudent = students.stream()
-                .sorted(Comparator.comparing(Student::getRank))
-                .skip(1)
-                .findFirst().get();
+        /*
+        ========= *** 9. Gender wise average age map  */
+        System.out.println("=> CASE 9 : Gender wise average age map  :: " +
+                students.stream()
+                        .collect(Collectors.groupingBy(Student::getGender,Collectors.averagingInt(Student::getAge))));
 
 
-//        System.out.println(rankeFilteredlistRang_50_100);
-//        System.out.println(cityFilterList);
-//        System.out.println("deptFilterList  :: "+deptFilterList);
-//        System.out.println("groutStudentByDeptNameMap  :: "+groutStudentByDeptNameMap);
-        System.out.println("groutStudentByDeptNameMapWithCount  :: "+groutStudentByDeptNameMapWithCount);
-        System.out.println("groutStudentByDeptNameMapWithCountMax  :: "+groutStudentByDeptNameMapWithCountMax);
-        System.out.println("groutStudentByGenderAgeAvg  :: "+groutStudentByGenderAgeAvg);
-        System.out.println("groutStudentByDeptNameMinRank  :: "+groutStudentByDeptNameMinRank);
-        System.out.println("minRankStudent  :: "+minRankStudent);
+        /*
+        ========= *** 10. Department wise min rank map   */
+        System.out.println("=> CASE 10 : Department wise min rank map :: " +
+                students.stream()
+                        .collect(Collectors.groupingBy(Student::getDept,
+                                Collectors.minBy(Comparator.comparing(Student::getRank)))));
 
+        /*
+        ========= *** 11. min rank student   */
+        System.out.println("=> CASE 11 : min rank student :: " +
+                students.stream()
+                        .sorted(Comparator.comparing(Student::getRank))
+                        .skip(1)
+                        .findFirst().get());
 
     }
 }

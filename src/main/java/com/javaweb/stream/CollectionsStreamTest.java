@@ -15,9 +15,130 @@ public class CollectionsStreamTest {
     public static void main(String[] args) {
 
 
-        //    1. *** char occurrences count in string
         String input = "ilovejavaprogramming";
+        System.out.println("====***  STRING Characters Stream Play cases :: ***  ===== SAMPLE ::: "+ input);
+
+        System.out.println("=> CASE : 1 Occurance count of character in String :: ");
+        System.out.println(""+
+                Arrays.stream(input.split(""))
+                        .collect(Collectors.groupingBy(Function.identity(), Collectors.counting())));
+
+        System.out.println("=> CASE : 2 Duplicate count of character in String :: ");
+        System.out.println(""+
+                Arrays.stream(input.split(""))
+                        .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
+                        .entrySet().stream()
+                        .filter(x->x.getValue()>1)
+                        .map(Map.Entry::getKey)
+                        .toList());
+
+        System.out.println("=> CASE : 3 Unique character in String :: ");
+        System.out.println(""+
+                Arrays.stream(input.split(""))
+                        .collect(Collectors
+                                .groupingBy(Function.identity(), Collectors.counting()))
+                        .entrySet().stream()
+                        .filter(x->x.getValue()==1)
+                        .map(Map.Entry::getKey)
+                        .toList());
+
+        System.out.println("=> CASE : 4 First non repeated character in String :: ");
+        System.out.println(""+
+                Arrays.stream(input.split(""))
+                        .collect(Collectors.groupingBy(Function.identity(), LinkedHashMap::new, Collectors.counting()))
+                        .entrySet().stream()
+                        .filter(x -> x.getValue() == 1)
+                        .findFirst().get().getKey());
+
+        System.out.println("=> CASE : 5 First repeated character in String :: ");
+        System.out.println(""+
+                Arrays.stream(input.split(""))
+                        .collect(Collectors
+                                .groupingBy(Function.identity(),LinkedHashMap::new ,Collectors.counting()))
+                        .entrySet().stream().filter(x->x.getValue()>1)
+                        .map(Map.Entry::getKey)
+                        .toList());
+
+
         String[] stringArray={"java","latest","spring","microservices","amazonwebservices"};
+        System.out.println("====***  STRING Stream Play cases :: ***  ===== SAMPLE ::: "+ Arrays.toString(stringArray));
+
+        System.out.println("=> CASE : 1 Longest word in String :: ");
+        System.out.println(""+
+                Arrays.stream(stringArray)
+                        .reduce((word1, word2) -> word1.length() > word2.length() ? word1 : word2)
+                        .get());
+
+
+        List<String> listJoinDelimeter = Arrays.asList("1", "2", "3", "4");
+        System.out.println("=> CASE : 2 word delimiter join in String :: SAMPLE ::: "+listJoinDelimeter);
+        System.out.println(String.join("->",listJoinDelimeter));
+
+
+
+
+
+
+        int[] numbers={1,2,3,4,11,3,10,5,6,7,8,9,10,12,15,51,61};
+        System.out.println("====***  Integer Array Stream Play cases :: ***  ===== SAMPLE ::: "+ Arrays.toString(numbers));
+
+
+        System.out.println("=> CASE : 1 ASC Order Sorting in Integer Array :: ");
+        System.out.println(""+
+                Arrays.stream(numbers).boxed()
+                        .sorted()
+                        .toList());
+
+        System.out.println("=> CASE : 2 DESC Order Sorting in Integer Array :: ");
+        System.out.println(""+
+                Arrays.stream(numbers).boxed()
+                        .sorted(
+                                Comparator.reverseOrder() // put this line if you want to revrese the natural order
+                        )
+                        .toList());
+
+        System.out.println("=> CASE : 3 Highest in Integer Array :: ");
+        System.out.println(""+
+                Arrays.stream(numbers).boxed()
+                        .sorted(Comparator.reverseOrder())
+//                .skip(1)
+                        .findFirst().get());
+
+        System.out.println("=> CASE : 4 Second highest in Integer Array :: ");
+        System.out.println(""+
+                Arrays.stream(numbers).boxed()
+                        .sorted(Comparator.reverseOrder())
+                        .skip(1)
+                        .findFirst().get());
+
+        System.out.println("=> CASE : 5 Lowest in Integer Array :: ");
+        System.out.println(""+
+                Arrays.stream(numbers).boxed()
+                        .sorted()
+                        .findFirst().get());
+
+        System.out.println("=> CASE : 6 Second lowest in Integer Array :: ");
+        System.out.println(""+
+                Arrays.stream(numbers).boxed()
+                        .sorted()
+                        .skip(1)
+                        .findFirst().get());
+
+        System.out.println("=> CASE : 7 Starts with in Integer Array :: ");
+        System.out.println(""+
+                Arrays.stream(numbers).boxed()
+                        .map(s -> s + "")
+                        .filter(s-> s.startsWith("1"))
+                        .toList());
+
+        System.out.println("=> CASE : 8 Stream range in Integer Array :: ");
+        IntStream.rangeClosed(1,10)
+                .skip(1)
+                .limit(8)
+                .forEach(System.out::println);
+
+
+        /*
 
         Map<String, Long> occuranceCount  = Arrays.stream(input.split(""))
                 .collect(Collectors
@@ -52,6 +173,10 @@ public class CollectionsStreamTest {
                 .map(Map.Entry::getKey)
                 .toList();
 
+    */
+
+        /*
+
         int[] numbers={1,2,3,4,11,3,10,5,6,7,8,9,10,12,15,51,61};
 
         List<Integer> collectIntegersAsc = Arrays.stream(numbers).boxed()
@@ -83,9 +208,7 @@ public class CollectionsStreamTest {
                 .skip(1)
                 .findFirst().get();
 
-        String logngestWord = Arrays.stream(stringArray)
-                .reduce((word1, word2) -> word1.length() > word2.length() ? word1 : word2)
-                .get();
+        String logngestWord = ;
 
         List<String> listString = Arrays.stream(numbers).boxed()
                 .map(s -> s + "")
@@ -99,35 +222,8 @@ public class CollectionsStreamTest {
         IntStream.rangeClosed(1,10)
                 .skip(1)
                 .limit(8)
-                .forEach(System.out::println);
+                .forEach(System.out::println);*/
 
-        //sort list and map in stream
-
-        //map and flat map in stream
-
-        //
-
-
-
-
-
-        System.out.println("Occurance count :: "+occuranceCount);
-        System.out.println("duplicateCount :: "+duplicateCount);
-        System.out.println("uniqueElements :: "+uniqueElements);
-        System.out.println("fistNonRepeat :: "+fistNonRepeat);
-        System.out.println("firstRepeted :: "+firstRepeted);
-
-        System.out.println("sorted asc :: "+collectIntegersAsc);
-        System.out.println("sorted desc :: "+collectIntegersDesc);
-        System.out.println("highest :: "+highest);
-        System.out.println("secondHighest :: "+secondHighest);
-        System.out.println("lowast :: "+lowast);
-        System.out.println("secondLowestInt :: "+secondLowestInt);
-
-        System.out.println("logngestWord :: "+logngestWord);
-        System.out.println("listString :: "+listString);
-
-        System.out.println(String.join("->",listJoinDelimeter));
 
 
 

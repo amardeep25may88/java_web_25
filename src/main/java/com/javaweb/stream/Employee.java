@@ -1,4 +1,4 @@
-package com.javaweb.employeestream;
+package com.javaweb.stream;
 
 
 import lombok.AllArgsConstructor;

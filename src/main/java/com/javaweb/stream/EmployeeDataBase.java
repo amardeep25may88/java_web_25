@@ -1,4 +1,4 @@
-package com.javaweb.employeestream;
+package com.javaweb.stream;
 
 import java.util.Arrays;
 import java.util.List;
