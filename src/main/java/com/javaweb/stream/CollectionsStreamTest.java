@@ -14,7 +14,6 @@ public class CollectionsStreamTest {
     private static int fib(int n) { return (n <= 1) ? n : fib(n - 1) + fib(n - 2); }
     public static void main(String[] args) {
 
-
         String input = "ilovejavaprogramming";
         System.out.println("====***  STRING Characters Stream Play cases :: ***  ===== SAMPLE ::: "+ input);
 
@@ -136,6 +135,15 @@ public class CollectionsStreamTest {
                 .skip(1)
                 .limit(8)
                 .forEach(System.out::println);
+
+
+
+
+        IntStream.rangeClosed(1, 10)
+                .parallel()
+                .forEachOrdered(System.out::print);
+
+
 
 
         /*
