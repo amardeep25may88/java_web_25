@@ -15,6 +15,7 @@ public class CollectionsStreamTest {
     public static void main(String[] args) {
 
 
+
         String input = "ilovejavaprogramming";
         System.out.println("====***  STRING Characters Stream Play cases :: ***  ===== SAMPLE ::: "+ input);
 
@@ -22,6 +23,11 @@ public class CollectionsStreamTest {
         System.out.println(""+
                 Arrays.stream(input.split(""))
                         .collect(Collectors.groupingBy(Function.identity(), Collectors.counting())));
+
+        System.out.println("""
+                Arrays.stream(input.split(""))
+                                    .collect(Collectors.groupingBy(Function.identity(), Collectors.counting())));
+                """);
 
         System.out.println("=> CASE : 2 Duplicate count of character in String :: ");
         System.out.println(""+
@@ -35,8 +41,7 @@ public class CollectionsStreamTest {
         System.out.println("=> CASE : 3 Unique character in String :: ");
         System.out.println(""+
                 Arrays.stream(input.split(""))
-                        .collect(Collectors
-                                .groupingBy(Function.identity(), Collectors.counting()))
+                        .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
                         .entrySet().stream()
                         .filter(x->x.getValue()==1)
                         .map(Map.Entry::getKey)
@@ -222,7 +227,45 @@ public class CollectionsStreamTest {
         IntStream.rangeClosed(1,10)
                 .skip(1)
                 .limit(8)
-                .forEach(System.out::println);*/
+                .forEach(System.out::println);
+
+
+                //Occurance cout
+                Arrays.stream(input.split(""))
+                        .collect(Collectors.groupingBy(Function.identity(), Collectors.counting())));
+                //
+
+
+
+
+                 int[] inputArray={1,2,3,11,35,23,44,33,33,22,22,39};
+        Integer value= Arrays.stream(inputArray)
+                .boxed()
+                .sorted(Comparator.reverseOrder())
+                .distinct()
+                .skip(1)
+                .findFirst().get();
+
+        System.out.println(value);
+
+        String result = "programming".chars()
+                .distinct()
+                .mapToObj(c->(char) c)
+                .map(String::valueOf)
+                .collect(Collectors.joining());
+
+        Map<Character, Integer> counts = new LinkedHashMap<>();
+        for (char c : "programming".toCharArray()) {
+            counts.put(c, counts.getOrDefault(c, 0) + 1);
+        }
+
+        Map<Character,Integer> count=new LinkedHashMap<>();
+        for(char c : "programming".toCharArray()){
+            count.put(c,count.getOrDefault(c,0)+1);
+        }
+
+
+    */
 
 
 

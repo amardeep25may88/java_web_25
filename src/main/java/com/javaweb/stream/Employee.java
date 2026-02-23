@@ -20,4 +20,9 @@ public class Employee {
     private List<Project> projects;
     private double salary;
     private String gender;
+
+    public Employee(String alice, String newYork) {
+    }
+
+
 }
